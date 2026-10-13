@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#07060f">
+<title>DuskveilSMP Store — Website, Server Minecraft, Custom Plugin & Aplikasi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<!-- Firebase aktif hanya jika FIREBASE_CONFIG di assets/app.js diisi. Jika tidak: MODE DEMO -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.12.2/firebase-app-compat.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.12.2/firebase-auth-compat.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/10.12.2/firebase-firestore-compat.min.js"></script>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="bg" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><div class="gridl"></div></div>
+<div class="glow" id="glow" aria-hidden="true"></div>
+<div id="progress"></div>
+<div id="confetti" aria-hidden="true"></div>
+<div id="lock"><div><div style="font-size:54px">🚫</div><h2>Akses Ditolak</h2><p>Developer tools terdeteksi. Tutup DevTools lalu muat ulang halaman untuk melanjutkan.</p></div></div>
+<header id="hdr">
+  <div class="wrap nav">
+    <a class="logo" href="#" onclick="go('home');return false" aria-label="DuskveilSMP Store">
+      <svg width="30" height="30" viewBox="0 0 32 32"><defs><linearGradient id="lgd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a855f7"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs><rect width="32" height="32" rx="9" fill="url(#lgd)"/><path d="M20.5 8.5a8 8 0 1 0 3 11.2 6.5 6.5 0 0 1-3-11.2z" fill="#fff"/></svg>
+      <span>DuskveilSMP<em class="grad">Store</em></span>
+    </a>
+    <nav class="links" id="links">
+      <a href="#layanan" data-sec="layanan">Layanan</a>
+      <a href="#plugin" data-sec="plugin">Plugin</a>
+      <a href="#paket" data-sec="paket">Paket</a>
+      <a href="#alur" data-sec="alur">Alur</a>
+      <a href="#akun" data-sec="akun">Akun</a>
+      <a href="#faq" data-sec="faq">FAQ</a>
+    </nav>
+    <div class="navr" id="navr"></div>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+<!-- ================= HOME ================= -->
+<div class="view on" id="v-home" style="padding:0">
+
+  <section class="hero wrap">
+    <div class="hero-l">
+      <div class="pill rv"><b></b> Order dibuka · respon cepat</div>
+      <h1 class="rv" style="--d:.08s">Kami membuat<br><span class="rot grad" id="rot">website modern</span><br>sesuai keinginanmu.</h1>
+      <p class="lead rv" style="--d:.16s">DuskveilSMP Store — jasa pembuatan website, developer server Minecraft, <b>custom plugin</b>, aplikasi custom, dan optimasi server yang super lag. Bayar otomatis, pantau pesanan real-time.</p>
+      <div class="cta rv" style="--d:.24s">
+        <button class="btn p lg" onclick="scrollToSec('paket')">Lihat Paket & Harga <span class="arr">→</span></button>
+        <button class="btn g lg" onclick="openSvc('plg')">⛏️ Pesan Custom Plugin</button>
+      </div>
+      <div class="stats rv" style="--d:.32s">
+        <div class="stat"><b id="stUsers">0</b><span>Akun terdaftar</span></div>
+        <div class="stat"><b id="stSvc">0</b><span>Layanan</span></div>
+        <div class="stat"><b id="stPkg">0</b><span>Paket tersedia</span></div>
+        <div class="stat"><b>24/7</b><span>Order online</span></div>
+      </div>
+    </div>
+
+    <div class="hero-r rv" style="--d:.2s">
+      <div class="tilt console-wrap">
+        <div class="console glass">
+          <div class="c-top"><i></i><i></i><i></i><span>duskveil@server ~ console</span></div>
+          <div class="c-body" id="cbody"></div>
+          <div class="tps">
+            <div><small>TPS</small><div class="tps-v" id="tpsv">8.4</div></div>
+            <div class="tps-bar"><span id="tpsb"></span></div>
+          </div>
+          <div class="c-note">Ilustrasi proses optimasi</div>
+        </div>
+        <div class="chip-f c1">⛏️ Custom Plugin</div>
+        <div class="chip-f c2">⚡ Anti Lag</div>
+        <div class="chip-f c3">🌐 Website</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div class="mq" id="mq"></div></div>
+
+  <!-- Layanan -->
+  <section id="layanan"><div class="wrap">
+    <div class="sh rv"><span class="eyebrow">Layanan</span><h2>Semua yang kamu butuhkan, <span class="grad">satu tempat</span></h2><p>Lima layanan utama untuk bisnis, komunitas, dan server Minecraft-mu.</p></div>
+    <div class="bento">
+      <div class="bc sp rv" style="--d:.0s" onclick="openSvc('web')"><div class="ico">🌐</div><h3>Pembuatan Website</h3><p>Landing page, company profile, toko online dan web app yang cepat, responsif, dan aman.</p><ul><li>Desain modern & mobile friendly</li><li>SEO dasar & keamanan</li><li>Gratis revisi sesuai paket</li></ul><span class="more">Lihat paket →</span></div>
+      <div class="bc sp rv" style="--d:.08s" onclick="openSvc('mc')"><div class="ico">⛏️</div><h3>Developer Server Minecraft</h3><p>Setup server siap main hingga network lengkap Java & Bedrock — rapi, aman, dan stabil.</p><ul><li>Paper / Purpur / Velocity</li><li>Rank, ekonomi & proteksi</li><li>Anti-cheat & anti-DDoS setup</li></ul><span class="more">Lihat paket →</span></div>
+      <div class="bc sp hot rv" style="--d:.16s" onclick="openSvc('plg')"><span class="new">BARU</span><div class="ico">🧩</div><h3>Custom Plugin Minecraft</h3><p>Punya ide fitur unik? Kami tulis plugin-nya dari nol: command, GUI, ekonomi, minigame, dan lainnya.</p><ul><li>Paper / Spigot / Purpur</li><li>Config, permission & PlaceholderAPI</li><li>Source code diserahkan</li></ul><span class="more">Lihat paket →</span></div>
+      <div class="bc w3 sp rv" style="--d:.0s" onclick="openSvc('app')"><div class="ico">📱</div><h3>Aplikasi Sesuai Keinginan</h3><p>Bot Discord, aplikasi web, tools internal, hingga aplikasi mobile — kamu yang tentukan, kami yang bangun. Konsultasi di awal gratis.</p><span class="more">Lihat paket →</span></div>
+      <div class="bc w3 sp rv" style="--d:.08s" onclick="openSvc('opt')"><div class="ico">⚡</div><h3>Optimasi Server Super Lag</h3><p>Server lag parah? Kami audit, cari penyebabnya, tuning JVM, plugin, entity & world sampai TPS stabil. Dapat laporan sebelum & sesudah.</p><span class="more">Lihat paket →</span></div>
+    </div>
+  </div></section>
+
+  <!-- Custom Plugin -->
+  <section id="plugin" class="alt"><div class="wrap plg">
+    <div class="plg-l">
+      <div class="sh left rv"><span class="eyebrow">Custom Plugin</span><h2>Plugin yang <span class="grad">dibuat khusus</span> untuk servermu</h2><p>Bukan template. Setiap plugin ditulis sesuai konsep servermu — fitur, tampilan GUI, hingga pesan di game bisa kamu atur sendiri lewat config.</p></div>
+      <div class="chips rv" style="--d:.1s" id="ideas"></div>
+      <div class="cta rv" style="--d:.2s;justify-content:flex-start;margin-top:28px">
+        <button class="btn p lg" onclick="openSvc('plg')">Lihat Paket Plugin <span class="arr">→</span></button>
+      </div>
+    </div>
+    <div class="plg-r rv" style="--d:.15s">
+      <div class="code glass">
+        <div class="c-top"><i></i><i></i><i></i><span>DuskCrates.java</span></div>
+<pre><code><span class="c">// contoh plugin custom buatan kami</span>
+<span class="k">public class</span> <span class="t">DuskCrates</span> <span class="k">extends</span> <span class="t">JavaPlugin</span> {
+
+  <span class="a">@Override</span>
+  <span class="k">public void</span> <span class="f">onEnable</span>() {
+    <span class="f">saveDefaultConfig</span>();
+    <span class="f">getCommand</span>(<span class="s">"crate"</span>)
+      .<span class="f">setExecutor</span>(<span class="k">new</span> <span class="t">CrateCommand</span>(<span class="k">this</span>));
+    <span class="f">getLogger</span>().<span class="f">info</span>(<span class="s">"DuskCrates aktif!"</span>);
+  }
+}<span class="caret"></span></code></pre>
+        <div class="badges"><span>Paper</span><span>Spigot</span><span>Purpur</span><span>Java 17/21</span></div>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- Paket -->
+  <section id="paket"><div class="wrap">
+    <div class="sh rv"><span class="eyebrow">Paket & Harga</span><h2>Pilih paket, <span class="grad">bayar otomatis</span></h2><p>Pesananmu langsung masuk antrean begitu pembayaran terverifikasi.</p></div>
+    <div class="tabs rv" id="tabs"></div>
+    <div class="pkgs" id="pkgs"></div>
+    <p class="note rv">Butuh yang spesifik? Pilih paket <b>Custom</b> dan jelaskan kebutuhanmu — kami kirim penawaran harga.</p>
+  </div></section>
+
+  <!-- Alur -->
+  <section id="alur" class="alt"><div class="wrap">
+    <div class="sh rv"><span class="eyebrow">Alur Kerja</span><h2>Dari ide sampai <span class="grad">serah terima</span></h2></div>
+    <div class="steps">
+      <div class="stp rv" style="--d:0s"><i>1</i><h3>Konsultasi</h3><p>Ceritakan kebutuhanmu, kami bantu tentukan paket.</p></div>
+      <div class="stp rv" style="--d:.1s"><i>2</i><h3>Pesan & Bayar</h3><p>Checkout online, pembayaran terverifikasi otomatis.</p></div>
+      <div class="stp rv" style="--d:.2s"><i>3</i><h3>Pengerjaan</h3><p>Proyekmu dikerjakan, status bisa dipantau di akun.</p></div>
+      <div class="stp rv" style="--d:.3s"><i>4</i><h3>Revisi</h3><p>Cek hasilnya, ajukan revisi sesuai paket.</p></div>
+      <div class="stp rv" style="--d:.4s"><i>5</i><h3>Serah Terima</h3><p>File, source code, dan dokumentasi diserahkan.</p></div>
+    </div>
+  </div></section>
+
+  <!-- Akun -->
+  <section id="akun"><div class="wrap">
+    <div class="sh rv"><span class="eyebrow">Komunitas</span><h2>Daftar <span class="grad">Akun</span></h2><p>Member asli yang sudah bergabung — <b id="memCount">0</b> akun terdaftar.</p></div>
+    <div class="members" id="members"></div>
+  </div></section>
+
+  <!-- FAQ -->
+  <section id="faq" class="alt"><div class="wrap" style="max-width:800px">
+    <div class="sh rv"><span class="eyebrow">FAQ</span><h2>Pertanyaan umum</h2></div>
+    <details class="rv"><summary>Berapa lama pengerjaannya?</summary><p>Website sederhana 2–5 hari, plugin tergantung kompleksitas fitur, setup server 1–3 hari. Estimasi pasti diberikan setelah pembayaran dikonfirmasi.</p></details>
+    <details class="rv"><summary>Plugin untuk versi Minecraft apa?</summary><p>Paper, Spigot, dan Purpur. Sebutkan versi servermu di catatan pesanan, kami sesuaikan.</p></details>
+    <details class="rv"><summary>Apakah source code plugin diserahkan?</summary><p>Ya, source code dan dokumentasi config diserahkan setelah pekerjaan selesai.</p></details>
+    <details class="rv"><summary>Metode pembayaran apa saja?</summary><p>QRIS, GoPay, OVO, DANA, dan Virtual Account bank. Pembayaran terverifikasi otomatis.</p></details>
+    <details class="rv"><summary>Server saya lag parah, apa yang dikerjakan?</summary><p>Kami cek TPS/MSPT, profiling dengan Spark, audit plugin, konfigurasi server, JVM flags, dan world. Kamu menerima laporan sebelum & sesudah optimasi.</p></details>
+  </div></section>
+
+  <!-- CTA -->
+  <section style="padding-top:40px"><div class="wrap">
+    <div class="ctab rv">
+      <h2>Siap mulai proyekmu?</h2>
+      <p>Pilih paket sekarang atau konsultasikan ide plugin & aplikasimu dulu.</p>
+      <div class="cta" id="contactBtns">
+        <button class="btn w lg" onclick="scrollToSec('paket')">Mulai Pesan</button>
+      </div>
+    </div>
+  </div></section>
+</div>
+
+<!-- ================= ORDERS ================= -->
+<div class="view" id="v-orders"><div class="wrap">
+  <h2>Pesanan Saya</h2><p class="sub">Riwayat dan status pesananmu.</p>
+  <div class="tbl"><table><thead><tr><th>ID</th><th>Layanan</th><th>Paket</th><th>Total</th><th>Bayar</th><th>Status</th><th>Tanggal</th></tr></thead><tbody id="myOrders"></tbody></table></div>
+</div></div>
+
+<!-- ================= ADMIN ================= -->
+<div class="view" id="v-admin"><div class="wrap">
+  <h2>Dashboard Admin</h2><p class="sub">Kelola pesanan, akun, katalog harga, dan pantau pendapatan.</p>
+  <div class="kpis" id="kpis"></div>
+  <div class="two">
+    <div class="panel"><h3>Pendapatan 7 Hari</h3><div class="bars" id="bars"></div><div style="height:24px"></div></div>
+    <div class="panel"><h3>Pesanan per Layanan</h3><div id="svcStats" style="margin-top:12px"></div></div>
+  </div>
+  <div class="atabs">
+    <button class="tab on" id="at-orders" onclick="adminTab('orders')">Semua Pesanan</button>
+    <button class="tab" id="at-users" onclick="adminTab('users')">Daftar Akun</button>
+    <button class="tab" id="at-catalog" onclick="adminTab('catalog')">Katalog & Harga</button>
+  </div>
+  <div id="ad-orders" class="tbl"><table><thead><tr><th>ID</th><th>Pemesan</th><th>Layanan</th><th>Total</th><th>Bayar</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="adOrders"></tbody></table></div>
+  <div id="ad-users" class="tbl" style="display:none"><table><thead><tr><th>Akun</th><th>Email</th><th>Role</th><th>Bergabung</th><th>Aksi</th></tr></thead><tbody id="adUsers"></tbody></table></div>
+  <div id="ad-catalog" style="display:none">
+    <div class="tbl"><table><thead><tr><th>Layanan</th><th>Paket</th><th>Harga (Rp)</th><th>Tampil</th></tr></thead><tbody id="adCatalog"></tbody></table></div>
+    <button class="btn p" style="margin-top:16px" onclick="saveCatalog()">Simpan Katalog</button>
+  </div>
+</div></div>
+</main>
+
+<footer><div class="wrap foot">
+  <div><a class="logo" href="#" onclick="go('home');return false"><span>DuskveilSMP<em class="grad">Store</em></span></a><p style="margin-top:8px;max-width:340px">Website · Server Minecraft · Custom Plugin · Aplikasi · Optimasi Server.</p></div>
+  <div id="footContact" class="fc"></div>
+  <div class="copy">© <span id="yr"></span> DuskveilSMP Store. Semua hak dilindungi.</div>
+</div></footer>
+
+<!-- ================= MODALS ================= -->
+<div class="ov" id="m-login"><div class="modal">
+  <button class="x" onclick="closeM('m-login')" aria-label="Tutup">✕</button>
+  <h3>Masuk ke DuskveilSMP</h3><p class="sub" style="margin-bottom:0">Gunakan akun Google untuk melanjutkan.</p>
+  <button class="gbtn" onclick="loginGoogle()">
+    <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.6l6.7-6.7C35.6 2.4 30.2 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.8 6.1C12.3 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.4 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.9-4.7l-7.8-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.8-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.9 2.3-8.4 2.3-6.3 0-11.7-4.1-13.6-9.8l-7.8 6.1C6.5 42.6 14.6 48 24 48z"/></svg>
+    Lanjutkan dengan Google
+  </button>
+  <div class="demo" id="demoNote" style="display:none"></div>
+  <div id="demoBox" style="display:none">
+    <label>Nama (demo)</label><input type="text" id="demoName" maxlength="24" placeholder="Nama kamu">
+    <label>Email (demo)</label><input type="email" id="demoEmail" placeholder="kamu@gmail.com">
+    <button class="btn p" style="width:100%;margin-top:16px" onclick="demoLogin()">Masuk (Demo)</button>
+    <button class="btn g" style="width:100%;margin-top:8px" onclick="demoLogin(true)">Masuk sebagai Admin (Demo)</button>
+  </div>
+</div></div>
+
+<div class="ov" id="m-profile"><div class="modal">
+  <button class="x" onclick="closeM('m-profile')" aria-label="Tutup">✕</button>
+  <h3>Edit Profil</h3><p class="sub" style="margin-bottom:0">Ganti foto dan nama tampilanmu.</p>
+  <div class="pic">
+    <div class="avatar lg" id="pfAvatar"></div>
+    <div>
+      <input type="file" id="pfFile" accept="image/*" style="display:none">
+      <button class="btn g sm" onclick="document.getElementById('pfFile').click()">📷 Ganti Foto</button>
+      <button class="btn d sm" style="margin-top:6px" onclick="removePhoto()">Hapus Foto</button>
+    </div>
+  </div>
+  <label>Nama Tampilan</label><input type="text" id="pfName" maxlength="24">
+  <label>Email</label><input type="text" id="pfEmail" disabled>
+  <button class="btn p" style="width:100%;margin-top:20px" onclick="saveProfile()">Simpan Perubahan</button>
+</div></div>
+
+<div class="ov" id="m-order"><div class="modal">
+  <button class="x" onclick="stopPay();closeM('m-order')" aria-label="Tutup">✕</button>
+  <div id="orderBody"></div>
+</div></div>
+
+<div id="toast"></div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

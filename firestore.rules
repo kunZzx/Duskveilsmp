@@ -1,0 +1,53 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{db}/documents {
+
+    // Admin = email di daftar ini (email terverifikasi) ATAU user dengan role "admin"
+    function isAdmin() {
+      return request.auth != null && (
+        (request.auth.token.email_verified == true
+          && request.auth.token.email in ['admin@duskveilsmp.com'])   // GANTI dengan email admin kamu
+        || (exists(/databases/$(db)/documents/users/$(request.auth.uid))
+          && get(/databases/$(db)/documents/users/$(request.auth.uid)).data.role == 'admin')
+      );
+    }
+
+    // Data privat akun (ada email) — hanya pemilik & admin
+    match /users/{uid} {
+      allow read: if request.auth != null && (request.auth.uid == uid || isAdmin());
+      allow create: if request.auth != null && request.auth.uid == uid
+                    && request.resource.data.role == 'user';
+      allow update: if isAdmin()
+                    || (request.auth != null && request.auth.uid == uid
+                        && request.resource.data.role == resource.data.role
+                        && request.resource.data.get('banned', false) == resource.data.get('banned', false));
+    }
+
+    // Profil publik (nama, foto) — untuk "Daftar Akun" di beranda. TANPA email.
+    match /profiles/{uid} {
+      allow read: if true;
+      allow create: if request.auth != null && request.auth.uid == uid
+                    && request.resource.data.role == 'user'
+                    && !('email' in request.resource.data);
+      allow update: if isAdmin()
+                    || (request.auth != null && request.auth.uid == uid
+                        && request.resource.data.role == resource.data.role
+                        && request.resource.data.get('banned', false) == resource.data.get('banned', false)
+                        && !('email' in request.resource.data));
+    }
+
+    match /orders/{id} {
+      allow read: if isAdmin() || (request.auth != null && resource.data.uid == request.auth.uid);
+      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid
+                    && request.resource.data.status in ['menunggu','konsultasi'];
+      // Status "lunas" hanya boleh diubah admin / backend (Admin SDK dari webhook)
+      allow update: if isAdmin();
+    }
+
+    // Katalog & harga: semua boleh baca, hanya admin yang boleh ubah
+    match /settings/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}
